@@ -125,7 +125,7 @@ const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
 
       <h5 className="text-2xl text-indigo-500">{businessData?.name}</h5>
       <div>
-        {businessData?.hours[0].is_open_now ? (
+        {businessData?.hours && businessData?.hours[0].is_open_now ? (
           <Badge variant="default">Open</Badge>
         ) : (
           <Badge variant="destructive">Closed</Badge>
@@ -145,16 +145,17 @@ const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {businessData?.hours[0].open.map((day, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium text-slate-500">
-                    {getDayName(day?.day)}
-                  </TableCell>
-                  <TableCell className="text-slate-500">
-                    {formatTime(day?.start)} - {formatTime(day?.end)}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {businessData?.hours &&
+                businessData?.hours[0].open.map((day, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium text-slate-500">
+                      {getDayName(day?.day)}
+                    </TableCell>
+                    <TableCell className="text-slate-500">
+                      {formatTime(day?.start)} - {formatTime(day?.end)}
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </div>
@@ -225,30 +226,36 @@ const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
           <GanttChartSquare /> Reviews
         </Badge>
         <div>
-          {reviewsData?.reviews.map((review, index) => (
-            <div key={index} className="p-4">
-              <div className="flex items-center gap-x-2">
-                <Avatar>
-                  <AvatarImage src={review?.user?.image_url} />
-                  <AvatarFallback className="text-slate-500">
-                    {review?.user?.name}
-                  </AvatarFallback>
-                </Avatar>
-                <p className="text-slate-500">{review?.time_created}</p>
-              </div>
-              <Rating
-                initialValue={review?.rating}
-                readonly={true}
-                SVGclassName="text-indigo-500 inline"
-              />
-              <p className="text-slate-500">{review?.text}</p>
-              <Link href={review?.url}>
-                <p className="text-slate-500 mt-[7px] hover:text-slate-700 cursor-pointer">
-                  See full review
-                </p>
-              </Link>
-            </div>
-          ))}
+          {!reviewsData ? (
+            <div>No reviews for this business</div>
+          ) : (
+            <>
+              {reviewsData?.reviews.map((review, index) => (
+                <div key={index} className="p-4">
+                  <div className="flex items-center gap-x-2">
+                    <Avatar>
+                      <AvatarImage src={review?.user?.image_url} />
+                      <AvatarFallback className="text-slate-500">
+                        {review?.user?.name}
+                      </AvatarFallback>
+                    </Avatar>
+                    <p className="text-slate-500">{review?.time_created}</p>
+                  </div>
+                  <Rating
+                    initialValue={review?.rating}
+                    readonly={true}
+                    SVGclassName="text-indigo-500 inline"
+                  />
+                  <p className="text-slate-500">{review?.text}</p>
+                  <Link href={review?.url}>
+                    <p className="text-slate-500 mt-[7px] hover:text-slate-700 cursor-pointer">
+                      See full review
+                    </p>
+                  </Link>
+                </div>
+              ))}
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -22,7 +22,7 @@ const BusinessList = ({ businessesData }: any) => {
           {businessesData.length} places found
         </h2>
       )}
-      {!businessesData ? (
+      {businessesData.length === 0 ? (
         <div className="grid  md:grid-cols-3 lg:grid-cols-4 gap-5">
           {skeletons.map((item, index) => (
             <Skelton key={index} />

@@ -21,10 +21,7 @@ export async function GET(
     const data = await response.data;
 
     console.log(data);
-    let responseData;
-    if (data) {
-      responseData = JSON.stringify(data.businesses);
-    }
+    const responseData = JSON.stringify(data);
 
     return new NextResponse(responseData, { status: 200 });
   } catch (error) {

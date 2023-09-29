@@ -140,15 +140,16 @@ const SearchBusiness = ({
                 data-aos-duration="1100"
                 className="mt-[15px] flex items-center justify-center gap-x-4 group transition-all ease-in-out duration-3000 "
               >
-                {categories.map((cat, index) => (
-                  <div
-                    key={index}
-                    className="border-[1px] w-[60px] p-4 bg-white rounded-full hover:border-slate-800 hover:scale-110 transition-all cursor-pointer"
-                    onClick={() => setTerm(cat?.name)}
-                  >
-                    <p>{cat?.icon}</p>
-                  </div>
-                ))}
+                {categories &&
+                  categories.map((cat, index) => (
+                    <div
+                      key={index}
+                      className="border-[1px] w-[60px] p-4 bg-white rounded-full hover:border-slate-800 hover:scale-110 transition-all cursor-pointer"
+                      onClick={() => setTerm(cat?.name)}
+                    >
+                      <p>{cat?.icon}</p>
+                    </div>
+                  ))}
               </div>
             )}
           </div>
