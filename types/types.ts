@@ -3,6 +3,7 @@ export interface BusinessDataI {
   image_url: string;
   display_phone: string;
   rating: number;
+  is_closed: boolean;
   photos: string[];
   coordinates: {
     latitude: string;
@@ -25,6 +26,7 @@ export interface BusinessDataI {
     country: string;
     city: string;
     zip_code: string;
+    display_address: string[];
   };
 }
 export interface ReviewsDataI {

@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { MapPin } from "lucide-react";
 import { Badge } from "./ui/badge";
 import Skelton from "./skeleton";
 import { useBusinessModal } from "@/hooks/use-business-modal";
-import Link from "next/link";
+import { BusinessDataI } from "@/types/types";
 
 const BusinessList = ({ businessesData }: any) => {
   const skeletons = [1, 2, 3, 4];
@@ -18,12 +17,12 @@ const BusinessList = ({ businessesData }: any) => {
   };
   return (
     <div className="mt-[35px] z-35 container">
-      {businessesData.length !== 0 && (
+      {businessesData && businessesData.length !== 0 && (
         <h2 className="text-slate-500 font-semibold text-[18px]">
           {businessesData.length} places found
         </h2>
       )}
-      {businessesData.length === 0 ? (
+      {!businessesData ? (
         <div className="grid  md:grid-cols-3 lg:grid-cols-4 gap-5">
           {skeletons.map((item, index) => (
             <Skelton key={index} />
@@ -31,11 +30,11 @@ const BusinessList = ({ businessesData }: any) => {
         </div>
       ) : (
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {businessesData.map((bus: any, index: number) => (
+          {businessesData.map((bus: BusinessDataI, index: string) => (
             <div key={index} className="mt-6 border bg-white rounded-md p-4">
               <Image
-                src={bus.image_url ? bus.image_url : "/placeholder.jpg"}
-                alt={bus.image_url}
+                src={bus?.image_url ? bus?.image_url : "/placeholder.jpg"}
+                alt={bus?.image_url}
                 width={200}
                 height={80}
                 priority
@@ -43,13 +42,17 @@ const BusinessList = ({ businessesData }: any) => {
                 onClick={() => handleModal(bus)}
               />
 
-              <h4 className="text-slate-500 mt-5 mb-3">{bus.name}</h4>
+              <h4 className="text-slate-500 mt-5 mb-3">{bus?.name}</h4>
               <div className="flex items-center gap-x-2 mb-2">
                 <MapPin />
-                <p className="text-[12px]">{bus.location.display_address[0]}</p>
-                <p className="text-[12px]">{bus.location.display_address[1]}</p>
+                <p className="text-[12px]">
+                  {bus?.location?.display_address[0]}
+                </p>
+                <p className="text-[12px]">
+                  {bus?.location?.display_address[1]}
+                </p>
               </div>
-              {bus.is_closed ? (
+              {bus?.is_closed ? (
                 <Badge variant="destructive">closed</Badge>
               ) : (
                 <Badge variant="default">open</Badge>

@@ -38,7 +38,9 @@ const SearchBusiness = ({
   setBusinessesData,
   setPageToggle,
 }: {
-  setBusinessesData: React.Dispatch<React.SetStateAction<BusinessDataI[]>>;
+  setBusinessesData: React.Dispatch<
+    React.SetStateAction<BusinessDataI[] | null>
+  >;
   setPageToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const confetti = useConfetti();
@@ -142,9 +144,9 @@ const SearchBusiness = ({
                   <div
                     key={index}
                     className="border-[1px] w-[60px] p-4 bg-white rounded-full hover:border-slate-800 hover:scale-110 transition-all cursor-pointer"
-                    onClick={() => setTerm(cat.name)}
+                    onClick={() => setTerm(cat?.name)}
                   >
-                    <p>{cat.icon}</p>
+                    <p>{cat?.icon}</p>
                   </div>
                 ))}
               </div>
