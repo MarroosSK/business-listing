@@ -34,35 +34,36 @@ const BusinessList = ({
         </div>
       ) : (
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {businessesData.map((bus) => (
-            <div key={bus.id} className="mt-6 border bg-white rounded-md p-4">
-              <Image
-                src={bus?.image_url ? bus?.image_url : "/placeholder.jpg"}
-                alt={bus?.image_url}
-                width={200}
-                height={80}
-                priority
-                className="w-full h-[150px] rounded-md hover:scale-110 transition-all cursor-pointer object-cover"
-                onClick={() => handleModal(bus)}
-              />
+          {businessesData &&
+            businessesData?.map((bus) => (
+              <div key={bus.id} className="mt-6 border bg-white rounded-md p-4">
+                <Image
+                  src={bus?.image_url ? bus?.image_url : "/placeholder.jpg"}
+                  alt={bus?.image_url}
+                  width={200}
+                  height={80}
+                  priority
+                  className="w-full h-[150px] rounded-md hover:scale-110 transition-all cursor-pointer object-cover"
+                  onClick={() => handleModal(bus)}
+                />
 
-              <h4 className="text-slate-500 mt-5 mb-3">{bus?.name}</h4>
-              <div className="flex items-center gap-x-2 mb-2">
-                <MapPin />
-                <p className="text-[12px]">
-                  {bus?.location?.display_address[0]}
-                </p>
-                <p className="text-[12px]">
-                  {bus?.location?.display_address[1]}
-                </p>
+                <h4 className="text-slate-500 mt-5 mb-3">{bus?.name}</h4>
+                <div className="flex items-center gap-x-2 mb-2">
+                  <MapPin />
+                  <p className="text-[12px]">
+                    {bus?.location?.display_address[0]}
+                  </p>
+                  <p className="text-[12px]">
+                    {bus?.location?.display_address[1]}
+                  </p>
+                </div>
+                {bus?.is_closed ? (
+                  <Badge variant="destructive">closed</Badge>
+                ) : (
+                  <Badge variant="default">open</Badge>
+                )}
               </div>
-              {bus?.is_closed ? (
-                <Badge variant="destructive">closed</Badge>
-              ) : (
-                <Badge variant="default">open</Badge>
-              )}
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </div>
