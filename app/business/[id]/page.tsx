@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useBusinessModal } from "@/hooks/use-business-modal";
 
 import axios from "axios";
 import toast from "react-hot-toast";
 
 import { useConfetti } from "@/hooks/use-confetti";
-import Modal from "@/components/ui/modal";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import {
