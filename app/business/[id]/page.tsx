@@ -32,22 +32,28 @@ import { Rating } from "react-simple-star-rating";
 import Skelton from "@/components/skeleton";
 import Skeleton2 from "@/components/skeleton2";
 
-//splide
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-// Default theme
-import "@splidejs/react-splide/css";
+//slick
+// Import css files
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
-// or other themes
-import "@splidejs/react-splide/css/skyblue";
-import "@splidejs/react-splide/css/sea-green";
-
-// or only core styles
-import "@splidejs/react-splide/css/core";
 import { formatTime, getDayName } from "@/lib/formatDayTime";
 import Link from "next/link";
 import { BusinessDataI, ReviewsDataI } from "@/types/types";
 
 const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
+  //slider settings
+  const settings = {
+    dots: true,
+    fade: true,
+    infinite: true,
+    autoPlay: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   const confetti = useConfetti();
   const businessModal = useBusinessModal();
   const [loading, setLoading] = useState(false);
@@ -195,26 +201,20 @@ const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
             <Badge variant="default" className="w-[150px]">
               <Camera /> Photos
             </Badge>
-            <Splide
-              aria-label="My Favorite Images"
-              options={{
-                type: "fade",
-                rewind: true,
-              }}
-            >
+            <Slider {...settings}>
               {businessData?.photos.map((photo, index) => (
-                <SplideSlide key={index}>
+                <div key={index}>
                   <Image
                     src={photo ? photo : "/placeholder.jpg"}
                     alt={"business-photo"}
-                    width={280}
-                    height={200}
+                    width={250}
+                    height={330}
                     priority
-                    className="w-full h-[200px] rounded-lg object-cover"
+                    className="w-full h-[330px] rounded-lg object-cover"
                   />
-                </SplideSlide>
+                </div>
               ))}
-            </Splide>
+            </Slider>
           </div>
         </div>
       </div>
