@@ -20,7 +20,7 @@ export async function GET(req: Request) {
     );
     const data = await response.data;
 
-    console.log(data.businesses);
+    //console.log(data.businesses);
     const responseData = JSON.stringify(data.businesses);
 
     return new NextResponse(responseData, { status: 200 });
