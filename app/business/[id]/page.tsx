@@ -43,6 +43,8 @@ import Link from "next/link";
 import { BusinessDataI, ReviewsDataI } from "@/types/types";
 
 const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
+  const skeletons = [1];
+
   //slider settings
   const settings = {
     dots: true,
@@ -104,7 +106,7 @@ const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
 
   return !businessData ? (
     <div>
-      {[1].map((item, index) => (
+      {skeletons.map((item, index) => (
         <Skeleton2 key={index} />
       ))}
     </div>

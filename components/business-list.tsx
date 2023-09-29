@@ -9,6 +9,7 @@ import { useBusinessModal } from "@/hooks/use-business-modal";
 import Link from "next/link";
 
 const BusinessList = ({ businessesData }: any) => {
+  const skeletons = [1, 2, 3, 4];
   const businessModal = useBusinessModal();
 
   const handleModal = (data: any) => {
@@ -24,7 +25,7 @@ const BusinessList = ({ businessesData }: any) => {
       )}
       {businessesData.length === 0 ? (
         <div className="grid  md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {[1, 2, 3, 4].map((item, index) => (
+          {skeletons.map((item, index) => (
             <Skelton key={index} />
           ))}
         </div>
