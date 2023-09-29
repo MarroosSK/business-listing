@@ -10,7 +10,7 @@ import Quickstart from "@/components/quickstart";
 import { BusinessDataI } from "@/types/types";
 
 export default function Home() {
-  const [yelpData, setYelpData] = useState<BusinessDataI[] | null>([]);
+  const [yelpData, setYelpData] = useState<BusinessDataI[]>([]);
   const [pageToggle, setPageToggle] = useState(false);
 
   useEffect(() => {

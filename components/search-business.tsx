@@ -38,9 +38,7 @@ const SearchBusiness = ({
   setBusinessesData,
   setPageToggle,
 }: {
-  setBusinessesData: React.Dispatch<
-    React.SetStateAction<BusinessDataI[] | null>
-  >;
+  setBusinessesData: React.Dispatch<React.SetStateAction<BusinessDataI[]>>;
   setPageToggle: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const confetti = useConfetti();

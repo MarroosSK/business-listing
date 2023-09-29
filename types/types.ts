@@ -1,4 +1,5 @@
 export interface BusinessDataI {
+  id: string;
   name: string;
   image_url: string;
   display_phone: string;

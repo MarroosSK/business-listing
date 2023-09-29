@@ -7,11 +7,15 @@ import Skelton from "./skeleton";
 import { useBusinessModal } from "@/hooks/use-business-modal";
 import { BusinessDataI } from "@/types/types";
 
-const BusinessList = ({ businessesData }: any) => {
+const BusinessList = ({
+  businessesData,
+}: {
+  businessesData: BusinessDataI[];
+}) => {
   const skeletons = [1, 2, 3, 4];
   const businessModal = useBusinessModal();
 
-  const handleModal = (data: any) => {
+  const handleModal = (data: BusinessDataI) => {
     businessModal.onOpen();
     businessModal.setData(data);
   };
@@ -22,7 +26,7 @@ const BusinessList = ({ businessesData }: any) => {
           {businessesData.length} places found
         </h2>
       )}
-      {businessesData.length === 0 ? (
+      {businessesData && businessesData.length === 0 ? (
         <div className="grid  md:grid-cols-3 lg:grid-cols-4 gap-5">
           {skeletons.map((item, index) => (
             <Skelton key={index} />
@@ -30,8 +34,8 @@ const BusinessList = ({ businessesData }: any) => {
         </div>
       ) : (
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {businessesData.map((bus: BusinessDataI, index: string) => (
-            <div key={index} className="mt-6 border bg-white rounded-md p-4">
+          {businessesData.map((bus) => (
+            <div key={bus.id} className="mt-6 border bg-white rounded-md p-4">
               <Image
                 src={bus?.image_url ? bus?.image_url : "/placeholder.jpg"}
                 alt={bus?.image_url}
