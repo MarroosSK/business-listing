@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import BusinessList from "@/components/business-list";
 import SearchBusiness from "@/components/search-business";

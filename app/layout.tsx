@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Header } from "@/components/header";
 import "./globals.css";
 import type { Metadata } from "next";
