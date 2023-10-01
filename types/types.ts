@@ -1,5 +1,6 @@
 export interface BusinessDataI {
   id: string;
+  url: string;
   name: string;
   image_url: string;
   display_phone: string;
@@ -7,8 +8,8 @@ export interface BusinessDataI {
   is_closed: boolean;
   photos: string[];
   coordinates: {
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
   };
   hours: [
     {

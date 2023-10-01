@@ -15,6 +15,7 @@ import {
   GanttChartSquare,
   Globe2,
   Home,
+  Map,
   MapPin,
   Phone,
   Star,
@@ -40,6 +41,8 @@ import Slider from "react-slick";
 import { formatTime, getDayName } from "@/lib/formatDayTime";
 import Link from "next/link";
 import { BusinessDataI, ReviewsDataI } from "@/types/types";
+import OpenMap from "@/components/open-map";
+import { Button } from "@/components/ui/button";
 
 const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
   const skeletons = [1];
@@ -59,6 +62,10 @@ const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
   const [loading, setLoading] = useState(false);
   const [businessData, setBusinessData] = useState<BusinessDataI | null>(null);
   const [reviewsData, setReviewsData] = useState<ReviewsDataI | null>(null);
+  const [coords, setCorrds] = useState({
+    latitude: "39.7837304",
+    longitude: "-100.4458825",
+  });
 
   //Business data fetch
   const fetchBusinessData = async () => {
@@ -211,66 +218,89 @@ const BusinessDetailPage = ({ params }: { params: { id: string } }) => {
 
         {/* PICTURES | REVIEWS */}
         <div className="h-full flex flex-col  w-full md:w-1/2">
+          {/* MAP */}
           <div className=" p-8  border bg-white rounded-md">
             <Badge variant="default" className="w-[150px]">
-              <Camera /> Photos
+              <Map /> Map
             </Badge>
-            <Slider {...settings}>
-              {businessData?.photos.map((photo, index) => (
-                <div key={index}>
-                  <Image
-                    src={photo ? photo : "/placeholder.jpg"}
-                    alt={"business-photo"}
-                    width={250}
-                    height={330}
-                    priority
-                    className="w-full h-[330px] rounded-lg object-cover"
-                  />
-                </div>
-              ))}
-            </Slider>
+            <OpenMap
+              lon={businessData?.coordinates.longitude}
+              lat={businessData?.coordinates.latitude}
+              name={businessData?.name}
+            />
           </div>
         </div>
       </div>
-      <div className=" p-8  border bg-white rounded-md">
-        <Badge variant="default" className="w-[150px]">
-          <GanttChartSquare /> Reviews
-        </Badge>
-        <div>
-          {reviewsData &&
-          reviewsData.reviews &&
-          reviewsData?.reviews.length <= 1 ? (
-            <div className="text-slate-500 mt-[8px]">
-              No reviews for this business
-            </div>
-          ) : (
-            <>
-              {reviewsData?.reviews.map((review, index) => (
-                <div key={index} className="p-4">
-                  <div className="flex items-center gap-x-2">
-                    <Avatar>
-                      <AvatarImage src={review?.user?.image_url} />
-                      <AvatarFallback className="text-slate-500">
-                        {review?.user?.name}
-                      </AvatarFallback>
-                    </Avatar>
-                    <p className="text-slate-500">{review?.time_created}</p>
+      <div className="flex flex-col md:flex-row gap-x-4">
+        <div className="w-full md:w-1/2 p-8  border bg-white rounded-md">
+          <Badge variant="default" className="w-[150px]">
+            <GanttChartSquare /> Reviews
+          </Badge>
+          <div>
+            {reviewsData &&
+            reviewsData.reviews &&
+            reviewsData?.reviews.length <= 1 ? (
+              <div className="text-slate-500 mt-[8px]">
+                No reviews for this business
+              </div>
+            ) : (
+              <>
+                {reviewsData?.reviews.map((review, index) => (
+                  <div key={index} className="p-4">
+                    <div className="flex items-center gap-x-2">
+                      <Avatar>
+                        <AvatarImage src={review?.user?.image_url} />
+                        <AvatarFallback className="text-slate-500">
+                          {review?.user?.name}
+                        </AvatarFallback>
+                      </Avatar>
+                      <p className="text-slate-500">{review?.time_created}</p>
+                    </div>
+                    <Rating
+                      initialValue={review?.rating}
+                      readonly={true}
+                      SVGclassName="text-indigo-500 inline"
+                    />
+                    <p className="text-slate-500">{review?.text}</p>
+                    <Link href={review?.url}>
+                      <p className="text-slate-500 mt-[7px] hover:text-slate-700 cursor-pointer">
+                        See full review
+                      </p>
+                    </Link>
                   </div>
-                  <Rating
-                    initialValue={review?.rating}
-                    readonly={true}
-                    SVGclassName="text-indigo-500 inline"
-                  />
-                  <p className="text-slate-500">{review?.text}</p>
-                  <Link href={review?.url}>
-                    <p className="text-slate-500 mt-[7px] hover:text-slate-700 cursor-pointer">
-                      See full review
-                    </p>
-                  </Link>
-                </div>
-              ))}
-            </>
-          )}
+                ))}
+              </>
+            )}
+          </div>
+        </div>
+        {/* PHOTO */}
+        <div className="w-full md:w-1/2 h-auto p-8  border bg-white rounded-md">
+          <Badge variant="default" className="w-[150px]">
+            <Camera /> Photos
+          </Badge>
+          <Slider {...settings}>
+            {businessData?.photos.map((photo, index) => (
+              <div key={index}>
+                <Image
+                  src={photo ? photo : "/placeholder.jpg"}
+                  alt={"business-photo"}
+                  width={250}
+                  height={330}
+                  priority
+                  className="w-full h-[330px] rounded-lg object-cover"
+                />
+              </div>
+            ))}
+          </Slider>
+          {/* HOT LINK */}
+          <div className="flex flex-col items-center justify-center pt-8">
+            <h2 className="text-slate-500 text-[22px]">
+              Do you wish to know more?
+            </h2>
+            <Link href={businessData?.url}>
+              <Button variant="outline">Visit</Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
